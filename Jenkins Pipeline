@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         SCANNER_HOME = tool 'sonarqube-scanner'
-        DOCKER_IMAGE = 'vaaisshnnu/bms:latest'
+        DOCKER_IMAGE = 'vaaisshnnu/bookmyshow:latest'
         EKS_CLUSTER_NAME = 'book-my-show-eks'
         AWS_REGION = 'ap-south-1'
     }
@@ -32,8 +32,8 @@ pipeline {
                 withSonarQubeEnv('sonar-server') {
                     sh ''' 
                     $SCANNER_HOME/bin/sonar-scanner \
-                        -Dsonar.projectName=BMS \
-                        -Dsonar.projectKey=BMS
+                        -Dsonar.projectName=Book-My-Show \
+                        -Dsonar.projectKey=Book-My-Show
                     '''
                 }
             }
@@ -82,7 +82,7 @@ pipeline {
                     withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker') {
                         sh ''' 
                         echo "Building Docker image..."
-                        docker build --no-cache -t $DOCKER_IMAGE -f bookmyshow-app/Dockerfile bookmyshow-app
+                        docker build --no-cache -t $DOCKER_IMAGE -f bookmyshow/Dockerfile bookmyshow
 
                         echo "Pushing Docker image to Docker Hub..."
                         docker push $DOCKER_IMAGE
