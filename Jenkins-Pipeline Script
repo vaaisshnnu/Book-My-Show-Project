@@ -50,7 +50,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
-                cd bookmyshow-app
+                cd bookmyshow
                 ls -la
                 if [ -f package.json ]; then
                     rm -rf node_modules package-lock.json
